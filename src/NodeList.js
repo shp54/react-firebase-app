@@ -6,7 +6,7 @@ class NodeList extends Component {
 		return (
 			<ul>
 			{this.props.nodes.map((node) => 
-				(<Node node={node} />)
+				(<Node key={node.name} node={node} />)
 			)}
 			</ul>
 		)
