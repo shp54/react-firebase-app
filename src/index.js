@@ -2,14 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import * as firebase from 'firebase'
-import config from './config'
+import firebaseDB from './db/db'
 import store from './reducers'
 import App from './App'
 import './index.css'
-
-// Initialize Firebase
-firebase.initializeApp(config)
-const database = firebase.database()
 
 //Sign into Firebase and kickoff the app
 firebase.auth().signInAnonymously().catch((error) => {
@@ -18,7 +14,7 @@ firebase.auth().signInAnonymously().catch((error) => {
 
 firebase.auth().onAuthStateChanged((user) => {
 	//Populate Redux store from Firebase every time Firebase values change
-	database.ref('/nodes').on('value', (snapshot) => {
+	firebaseDB.database().ref('/nodes').on('value', (snapshot) => {
 		let data = snapshot.val()
 		let nodeList = []
 		for(let key in data){
