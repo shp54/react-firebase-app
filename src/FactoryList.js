@@ -2,18 +2,18 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Factory from './Factory'
 
-function FactoryList({nodes, setActiveNode}){
+function FactoryList({nodes, activeNode, setActiveNode}){
 	return (
 		<ul>
 		{nodes.map((node) => 
-			(<Factory key={node.name} node={node} onNodeClick={(node) => setActiveNode(node.name)} />)
+			(<Factory key={node.name} node={node} active={node.name === activeNode} onNodeClick={(node) => setActiveNode(node.name)} />)
 		)}
 		</ul>
 	)
 }
 
 const mapStateToProps = (state) => { 
-	return { nodes: state.nodes } 
+	return { nodes: state.nodes, activeNode: state.active } 
 }
 
 const mapDispatchToProps = (dispatch) => {

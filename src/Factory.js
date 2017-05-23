@@ -17,7 +17,7 @@ function generateChildNodes(node){
 	}
 }
 
-function Factory({ node, onNodeClick }){
+function Factory({ node, active, onNodeClick }){
 	return (
 		<li onClick={(e) => { 
 			e.preventDefault()
@@ -28,7 +28,8 @@ function Factory({ node, onNodeClick }){
 				e.preventDefault()
 				generateChildNodes(node)
 			}} />	
-			<NodeList nodes={node.children} />
+			
+			{(active) ? <NodeList nodes={node.children} /> : ''}
 		</li>
 	)
 }
