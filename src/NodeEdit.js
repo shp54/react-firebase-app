@@ -1,28 +1,30 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
 import { editNode } from './firebaseActions'
 
-//Use internal state for this component to avoid polluting global state
-class NodeEdit extends Component {
-	componentDidMount(){
-		this.setState({newProp: ''})
-	}
-	
-	render(){
-		return (
-			<div>
-				<input type="text" onKeyDown={(e) => {
-					if(e.keyCode === 13 || e.keyCode === 9){
-						this.setState({newProp: e.target.value})
-					}
-				}} />
-				<input type="text" onKeyDown={(e) => {
-					if(e.keyCode === 13){
-						editNode(this.state.newProp, e.target.value)
-					}
-				}} />
-			</div>
-		)
+function NodeEdit({active, onNodeEdit}){
+	return (
+		<div>
+			<input type="text" value={active} onChange={(e) => { onNodeEdit(e.target.value) }} />
+			<input type="text" onKeyDown={(e) => {
+				if(e.keyCode === 13){
+					editNode(active, e.target.value)
+				}
+			}} />
+		</div>
+	)
+}
+
+const mapStateToProps = (state) => {
+	return { active: state.active }
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		onNodeEdit: (data) => {
+			dispatch({type: 'SET_ACTIVE_NODE', data})
+		}
 	}
 }
 
-export default NodeEdit
+export default connect(mapStateToProps, mapDispatchToProps)(NodeEdit)

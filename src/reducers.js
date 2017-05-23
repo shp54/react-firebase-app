@@ -1,6 +1,5 @@
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 
-//Create Redux store
 function nodeTree(state = [], action){
 	switch(action.type){
 		case 'ADD_NODES':
@@ -10,6 +9,15 @@ function nodeTree(state = [], action){
 	}
 }
 
-let store = createStore(nodeTree)
+function activeNode(state = '', action){
+	switch(action.type){
+		case 'SET_ACTIVE_NODE':
+			return action.data
+		default:
+			return state
+	}
+}
+
+let store = createStore(combineReducers({nodes: nodeTree, active: activeNode}), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 export default store
