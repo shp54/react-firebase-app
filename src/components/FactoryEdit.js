@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { editFactory } from './firebaseActions'
+import { editFactory } from '../firebaseActions'
 
 function FactoryEdit({active, onNodeEdit}){
 	return (

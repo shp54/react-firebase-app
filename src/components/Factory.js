@@ -1,9 +1,8 @@
 import React from 'react'
-import { addChildNodes } from './firebaseActions'
+import { addChildNodes } from '../firebaseActions'
 import NodeList from './NodeList'
 
 function generateChildNodes(node){
-	console.log("Generate child nodes!")
 	if(parseInt(node.data, 10)){ //Generate list of child nodes and push them to Firebase
 		let results = []
 		let min = 0
