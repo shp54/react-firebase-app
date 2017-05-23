@@ -8,21 +8,31 @@ import App from './App'
 import './index.css'
 
 //Sign into Firebase and kickoff the app
+const db = firebaseDB.database()
+
 firebase.auth().signInAnonymously().catch((error) => {
   console.log(`Error Code ${error.code} - $error.message`)
 })
 
 firebase.auth().onAuthStateChanged((user) => {
 	//Populate Redux store from Firebase every time Firebase values change
-	firebaseDB.database().ref('/nodes').on('value', (snapshot) => {
-		let data = snapshot.val()
-		let nodeList = []
-		for(let key in data){
-			nodeList.push({name: key, data: data[key]})
-		}
-		store.dispatch({
-			type: 'ADD_NODES',
-			data: nodeList
+	db.ref('/nodes').on('value', (snapshot) => {
+		db.ref('/children').on('value', (childrenSnapshot) => { //To get the child objects
+			let data = snapshot.val()
+			let children = childrenSnapshot.val()
+			
+			//Function to wrap wrangling children into data format we want
+			const childrenForKey = (key) => (children[key]) ? Object.entries(children[key]).map((a) => { return { key: a[0], value: a[1].value } }) : []
+				
+			let nodeList = []
+			for(let key in data){
+				nodeList.push({name: key, data: data[key], children: childrenForKey(key)})
+			}
+			
+			store.dispatch({
+				type: 'ADD_NODES',
+				data: nodeList
+			})
 		})
 	})
 })

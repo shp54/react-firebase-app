@@ -1,27 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import Node from './Node'
 
-function NodeList({nodes, setActiveNode}){
+function NodeList({ nodes }){
 	return (
 		<ul>
-		{nodes.map((node) => 
-			(<Node key={node.name} node={node} onNodeClick={(node) => setActiveNode(node.name)} />)
-		)}
+		{nodes.map((node) => {
+			return (<li key={node.key}>{node.value}</li>)
+		})}
 		</ul>
 	)
 }
 
-const mapStateToProps = (state) => { 
-	return { nodes: state.nodes } 
-}
+export default NodeList
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		setActiveNode: (data) => {
-			dispatch({type: 'SET_ACTIVE_NODE', data})
-		}
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NodeList)
