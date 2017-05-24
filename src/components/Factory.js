@@ -3,11 +3,11 @@ import { addChildNodes } from '../firebaseActions'
 import NodeList from './NodeList'
 
 function generateChildNodes(node){
-	if(parseInt(node.data, 10)){ //Generate list of child nodes and push them to Firebase
+	if(parseInt(node.numChildren, 10)){ //Generate list of child nodes and push them to Firebase
 		let results = []
-		let min = 0
-		let max = 12
-		for(let i = 0; i < node.data; i++){
+		let min = node.min || 0
+		let max = node.max || 12
+		for(let i = 0; i < node.numChildren; i++){
 			let node = Math.floor(Math.random() * (max - min)) + min
 			results.push(node)
 		}
@@ -16,19 +16,19 @@ function generateChildNodes(node){
 	}
 }
 
-function Factory({ node, active, onNodeClick }){
+function Factory({ node, isActive, onNodeClick }){
 	return (
 		<li onClick={(e) => { 
 			e.preventDefault()
 			onNodeClick(node)
 		}}>
-			{node.name}: {node.data}
+			{node.name}: {node.numChildren}
 			<input type='button' value='Generate' onClick={(e) => {
 				e.preventDefault()
 				generateChildNodes(node)
 			}} />	
 			
-			{(active) ? <NodeList nodes={node.children} /> : ''}
+			{(isActive) ? <NodeList nodes={node.children} /> : ''}
 		</li>
 	)
 }

@@ -6,11 +6,7 @@ function FactoryEdit({active, onNodeEdit}){
 	return (
 		<div>
 			<input type="text" value={active} onChange={(e) => { onNodeEdit(e.target.value) }} />
-			<input type="text" onKeyDown={(e) => {
-				if(e.keyCode === 13){
-					editFactory(active, e.target.value)
-				}
-			}} />
+			<input type="text" onChange={(e) => { editFactory(active, { numberOfChildren: e.target.value })} } />
 		</div>
 	)
 }

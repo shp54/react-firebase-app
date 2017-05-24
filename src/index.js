@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import * as firebase from 'firebase'
 import firebaseDB from './db/db'
 import store from './reducers'
-import App from './App'
+import App from './components/App'
 import './index.css'
 
 //Sign into Firebase and kickoff the app
@@ -17,22 +17,20 @@ firebase.auth().signInAnonymously().catch((error) => {
 firebase.auth().onAuthStateChanged((user) => {
 	//Populate Redux store from Firebase every time Firebase values change
 	db.ref('/nodes').on('value', (snapshot) => {
-		db.ref('/children').on('value', (childrenSnapshot) => { //To get the child objects
-			let data = snapshot.val()
-			let children = childrenSnapshot.val()
+		let data = snapshot.val()
+		console.log(data)
+		
+		//Function to wrap wrangling children into data format we want
+		const childrenForKey = (key) => (data[key] && data[key].children) ? Object.entries(data[key].children).map((a) => { return { key: a[0], value: a[1] } }) : []
 			
-			//Function to wrap wrangling children into data format we want
-			const childrenForKey = (key) => (children[key]) ? Object.entries(children[key]).map((a) => { return { key: a[0], value: a[1].value } }) : []
-				
-			let nodeList = []
-			for(let key in data){
-				nodeList.push({name: key, data: data[key], children: childrenForKey(key)})
-			}
-			
-			store.dispatch({
-				type: 'ADD_NODES',
-				data: nodeList
-			})
+		let nodeList = []
+		for(let key in data){
+			nodeList.push({name: key, numChildren: data[key].numberOfChildren, children: childrenForKey(key)})
+		}
+		
+		store.dispatch({
+			type: 'ADD_NODES',
+			data: nodeList
 		})
 	})
 })
