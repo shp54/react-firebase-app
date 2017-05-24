@@ -1,7 +1,7 @@
 import app from './db/db'
 
 function editFactory(node, data){
-	app.database().ref(`nodes/${node}`).set(data) 
+	app.database().ref(`nodes/${node}`).update(data) 
 }
 
 function addChildNodes(nodeName, list){

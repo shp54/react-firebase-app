@@ -25,7 +25,11 @@ firebase.auth().onAuthStateChanged((user) => {
 			
 		let nodeList = []
 		for(let key in data){
-			nodeList.push({name: key, numChildren: data[key].numberOfChildren, children: childrenForKey(key)})
+			nodeList.push({name: key, 
+						   numChildren: data[key].numberOfChildren, 
+						   min: data[key].min, 
+						   max: data[key].max, 
+						   children: childrenForKey(key)})
 		}
 		
 		store.dispatch({

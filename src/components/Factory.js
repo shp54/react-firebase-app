@@ -5,8 +5,8 @@ import NodeList from './NodeList'
 function generateChildNodes(node){
 	if(parseInt(node.numChildren, 10)){ //Generate list of child nodes and push them to Firebase
 		let results = []
-		let min = node.min || 0
-		let max = node.max || 12
+		let min = parseInt(node.min, 10) || 0
+		let max = parseInt(node.max, 10) || 100
 		for(let i = 0; i < node.numChildren; i++){
 			let node = Math.floor(Math.random() * (max - min)) + min
 			results.push(node)
