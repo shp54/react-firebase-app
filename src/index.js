@@ -18,7 +18,6 @@ firebase.auth().onAuthStateChanged((user) => {
 	//Populate Redux store from Firebase every time Firebase values change
 	db.ref('/nodes').on('value', (snapshot) => {
 		let data = snapshot.val()
-		console.log(data)
 		
 		//Function to wrap wrangling children into data format we want
 		const childrenForKey = (key) => (data[key] && data[key].children) ? Object.entries(data[key].children).map((a) => { return { key: a[0], value: a[1] } }) : []

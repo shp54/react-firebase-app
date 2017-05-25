@@ -11,7 +11,6 @@ function generateChildNodes(node){
 			let node = Math.floor(Math.random() * (max - min)) + min
 			results.push(node)
 		}
-		console.log(results)
 		addChildNodes(node.name, results)
 	}
 }
