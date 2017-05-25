@@ -18,6 +18,17 @@ function activeNode(state = '', action){
 	}
 }
 
-let store = createStore(combineReducers({nodes: nodeTree, active: activeNode}), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+function isRenaming(state = false, action){
+	switch(action.type){
+		case 'IS_RENAMING':
+			return true
+		default:
+			return state
+	}
+}
+
+let store = createStore(
+	combineReducers({nodes: nodeTree, active: activeNode, isRenaming: isRenaming}), 
+	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 export default store

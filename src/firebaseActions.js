@@ -1,7 +1,11 @@
 import app from './db/db'
 
 function editFactory(node, data){
-	app.database().ref(`nodes/${node}`).update(data) 
+	if(node){
+		app.database().ref(`nodes/${node}`).update(data) 
+	} else {
+		console.log("No node currently selected!")
+	}
 }
 
 function addChildNodes(nodeName, list){
@@ -12,7 +16,23 @@ function addChildNodes(nodeName, list){
 	}
 }
 
+function renameFactory(oldName, newName){
+	let oldRef = app.database().ref(`nodes/${oldName}/`)
+	let newRef = app.database().ref(`nodes/${newName}/`)
+	
+	oldRef.once('value', (snapshot) => {
+		newRef.set(snapshot.val(), (error) => {
+			if(!error){
+				oldRef.remove()
+			} else {
+				
+			}
+		})
+	})
+}
+
 export {
 	editFactory,
-	addChildNodes
+	addChildNodes,
+	renameFactory
 }
