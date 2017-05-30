@@ -7,3 +7,7 @@ body {
 input[type=button] {
 	border-radius: 15px;
 }
+
+ul {
+	list-style-type: none;
+}

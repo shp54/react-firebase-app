@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { editFactory, renameFactory } from '../firebaseActions'
+import { editFactory, renameFactory } from '../db/firebaseActions'
 
 function FactoryEdit({activeNodeName, allNodes, onNodeEdit}){
 	let activeNode = allNodes.filter((node) => node.name === activeNodeName)[0]

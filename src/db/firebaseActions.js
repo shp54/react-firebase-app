@@ -1,4 +1,4 @@
-import app from './db/db'
+import app from './db'
 
 function editFactory(node, data){
 	if(node){

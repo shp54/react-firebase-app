@@ -1,5 +1,5 @@
 import React from 'react'
-import { addChildNodes } from '../firebaseActions'
+import { addChildNodes } from '../db/firebaseActions'
 import NodeList from './NodeList'
 import '../css/Factory.css'
 
