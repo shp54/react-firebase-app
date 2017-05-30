@@ -5,7 +5,7 @@ import * as firebase from 'firebase'
 import firebaseDB from './db/db'
 import store from './reducers'
 import App from './components/App'
-import './index.css'
+import './css/index.css'
 
 //Sign into Firebase and kickoff the app
 const db = firebaseDB.database()

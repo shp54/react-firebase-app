@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+  margin: 50px;
+}
+
+.Edit {
+  float: right;
+  margin: 10px;
+  height: 100vh;
+}

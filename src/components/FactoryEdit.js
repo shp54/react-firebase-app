@@ -6,28 +6,36 @@ function FactoryEdit({activeNodeName, allNodes, onNodeEdit}){
 	let activeNode = allNodes.filter((node) => node.name === activeNodeName)[0]
 
 	return (
-		<div>	
+		<div className="Edit">	
 			<input type='button' value='New Factory' onClick={(e) => {
 				onNodeEdit('')
 			}} /><br />
-			<input type="text" placeholder={activeNodeName} onKeyDown={(e) => { 
+			{activeNodeName ? 'Active Node: ' + activeNodeName : ''}<br />
+			<input type="text" onKeyDown={(e) => { 
 				if(e.keyCode === 13 || e.keyCode === 9){
-					if(activeNodeName){
-						renameFactory(activeNodeName, e.target.value)
-					} else {
+					let newNodeName = e.target.value
+					let inputValid = true
+					if(inputValid){						
+						if(activeNodeName){
+							renameFactory(activeNodeName, newNodeName)
+						}
 						onNodeEdit(e.target.value) 
 					}
 				}				
-			}} />
-			<input type="text" value={activeNode ? activeNode.numChildren : ''} 
+			}} /><br />
+			Children: <input type="number" min='0' max='15' value={activeNode ? activeNode.numChildren : ''} 
 				onChange={(e) => { 
-					editFactory(activeNodeName, { numberOfChildren: e.target.value })
+					if(e.target.value > 15){
+						alert("Can only generate up to 15 children!")
+					} else {
+						editFactory(activeNodeName, { numberOfChildren: e.target.value })
+					}
 				}} /><br />
-			Min: <input type="text" placeholder='0' value={activeNode ? activeNode.min : ''} 
+			Min: <input type="number" placeholder='0' value={activeNode ? activeNode.min : ''} 
 				onChange={(e) => { 
 						editFactory(activeNodeName, { min: e.target.value })
 					}} /><br />
-			Max: <input type="text" placeholder='100' value={activeNode ? activeNode.max : ''} 
+			Max: <input type="number" placeholder='100' value={activeNode ? activeNode.max : ''} 
 				  onChange={(e) => { 
 					editFactory(activeNodeName, { max: e.target.value })
 				  }} /><br />
