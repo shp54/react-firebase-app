@@ -31,8 +31,14 @@ function renameFactory(oldName, newName){
 	})
 }
 
+function deleteNode(nodeName){
+	let nodeRef = app.database().ref(`nodes/${nodeName}/`)
+	nodeRef.remove().catch((error) => { console.log(error) })
+}
+
 export {
 	editFactory,
 	addChildNodes,
-	renameFactory
+	renameFactory,
+	deleteNode
 }

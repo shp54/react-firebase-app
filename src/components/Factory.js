@@ -1,5 +1,5 @@
 import React from 'react'
-import { addChildNodes } from '../db/firebaseActions'
+import { addChildNodes, deleteNode } from '../db/firebaseActions'
 import NodeList from './NodeList'
 import '../css/Factory.css'
 import plusIcon from '../icons/plus.svg'
@@ -39,6 +39,11 @@ function Factory({ node, isActive, onNodeClick }){
 							e.preventDefault()
 							generateChildNodes(node)
 				}} className='generateButton' />
+				<input type='button' value='Delete' onClick={(e) => {
+							e.preventDefault()
+							deleteNode(node.name)
+							onNodeClick('') //Reset active node
+				}} className='deleteButton' />
 				<NodeList nodes={node.children} />
 			</span> : ''}			
 		</li>	
