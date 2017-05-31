@@ -2,6 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { editFactory, renameFactory } from '../db/firebaseActions'
 
+function sanitizeInput(string){
+	return string.replace('/','')
+}
+
+function containsSlashes(string){
+	return string.indexOf('/') >= 0
+}
+
 function FactoryEdit({activeNodeName, allNodes, onNodeEdit}){
 	let activeNode = allNodes.filter((node) => node.name === activeNodeName)[0]
 
@@ -14,12 +22,14 @@ function FactoryEdit({activeNodeName, allNodes, onNodeEdit}){
 			<input type="text" onKeyDown={(e) => { 
 				if(e.keyCode === 13 || e.keyCode === 9){
 					let newNodeName = e.target.value
-					let inputValid = true
+					let inputValid = !containsSlashes(newNodeName)
 					if(inputValid){						
 						if(activeNodeName){
 							renameFactory(activeNodeName, newNodeName)
 						}
-						onNodeEdit(e.target.value) 
+						onNodeEdit(newNodeName) 
+					} else {
+						alert(`${newNodeName} contains invalid characters - how about ${sanitizeInput(newNodeName)}?`)
 					}
 				}				
 			}} /><br />
