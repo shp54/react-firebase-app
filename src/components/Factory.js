@@ -2,6 +2,8 @@ import React from 'react'
 import { addChildNodes } from '../db/firebaseActions'
 import NodeList from './NodeList'
 import '../css/Factory.css'
+import plusIcon from '../icons/plus.svg'
+import minusIcon from '../icons/minus.svg'
 
 function generateChildNodes(node){
 	if(parseInt(node.numChildren, 10)){ //Generate list of child nodes and push them to Firebase
@@ -18,21 +20,27 @@ function generateChildNodes(node){
 
 function Factory({ node, isActive, onNodeClick }){
 	return (
-		<li onClick={(e) => { 
-			e.preventDefault()
-			onNodeClick(node)
-		}}>
-
-			{node.name}: {node.numChildren} ({node.min || 0} : {node.max || 100})
+		<li>
+			<span onClick={(e) => { 
+				e.preventDefault()
+				if(!isActive){
+					onNodeClick(node)
+				} else {
+					onNodeClick('')
+				}
+			}}>
+				<img src={isActive ? minusIcon : plusIcon} className='list-icon' alt={isActive ? 'Expanded' : 'Collapsed' } />
+				{node.name}: {node.numChildren} ({node.min || 0} : {node.max || 100})
+			</span>
 			
-			{isActive ? 
-			<input type='button' value='Generate' onClick={(e) => {
-						e.preventDefault()
-						generateChildNodes(node)
-			}} className='generateButton' /> : ''}
-						
-			{(isActive) ? <NodeList nodes={node.children} /> : ''}
-			
+			{isActive ?
+			<span>
+				<input type='button' value='Generate' onClick={(e) => {
+							e.preventDefault()
+							generateChildNodes(node)
+				}} className='generateButton' />
+				<NodeList nodes={node.children} />
+			</span> : ''}			
 		</li>	
 	)
 }

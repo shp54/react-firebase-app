@@ -6,7 +6,7 @@ function FactoryList({nodes, activeNode, setActiveNode}){
 	return (
 		<ul>
 		{nodes.map((node) => 
-			(<Factory key={node.name} node={node} isActive={node.name === activeNode} onNodeClick={(node) => setActiveNode(node.name)} />)
+			(<Factory key={node.name} node={node} isActive={node.name === activeNode} onNodeClick={(node) => setActiveNode(node.name || '')} />)
 		)}
 		</ul>
 	)
